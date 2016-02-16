@@ -31,8 +31,8 @@ module.exports = function (grunt) {
 					'public/js/common.js',
 					'public/js/app.js',
 
-					'app/public/js/srv/*.js',
-					'app/public/js/ctrl/*.js',
+					'public/js/srv/*.js',
+					'public/js/ctrl/*.js',
 				],
 				dest: 'tmp/public/js/scripts.js'
 			},
@@ -73,21 +73,22 @@ module.exports = function (grunt) {
 		cssmin: {
 			dist: {
 				files: {
-					'tmp/public/css/styles.css': ['app/public/css/main.css']
+					'tmp/public/css/styles.css': ['public/css/main.css']
 				}
 			}
 		},
 		htmlrefs: {
 			dist: {
-				src: 'app/index.html',
+				src: 'index.html',
 				dest: "tmp/index.html",
 			}
 		},
 		copy: {
 			dist: {
 				files: [
+					{expand: true, src: ['package.json'], dest: 'dist'},
 					{expand: true, cwd: 'tmp/', src: ['**'], dest: 'dist'},
-					{expand: true, cwd: 'app/', src: ['public/images/**', 'partials/**'], dest: 'dist'},
+					{expand: true, src: ['partials/**'], dest: 'dist'},
 					{expand: true, cwd: 'node_modules/font-awesome/', src: ['fonts/**'], dest: 'dist/public'},
 					{expand: true, cwd: 'node_modules/bootstrap/', src: ['fonts/**'], dest: 'dist/public'},
 				]
