@@ -19,7 +19,7 @@
 		// Blog list
 		Blog.list = function(forceRefresh) {
 			if(!_list || forceRefresh) {
-				_list = {};
+				_list = _list || {};
 				$http.get("data/list.json?_=" + (+new Date())).then(function(data) {
 					_list = data.data;
 

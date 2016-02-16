@@ -1,0 +1,37 @@
+{
+	"concat": {
+		"js": {
+			"options": {
+				"separator": "\n"
+			},
+			"src": [
+				"node_modules/jquery/dist/jquery.min.js",
+				"node_modules/bootstrap/dist/js/bootstrap.min.js",
+				"node_modules/zombiej-bootstrap-components/bootstrap-components/js/bootstrap-components.min.js",
+				"node_modules/angular/angular.min.js",
+				"node_modules/angular-resource/angular-resource.min.js",
+				"node_modules/angular-route/angular-route.min.js",
+				"node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js",
+				"node_modules/admin-lte/dist/js/app.js",
+				"node_modules/remarkable/dist/remarkable.min.js",
+				"node_modules/moment/min/moment-with-locales.min.js",
+				"node_modules/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js",
+
+				"tmp/public/js/scripts.min.js"
+			],
+			"dest": "tmp/public/js/doc.js"
+		},
+		"css": {
+			"src": [
+				"node_modules/bootstrap/dist/css/bootstrap.min.css",
+				"node_modules/zombiej-bootstrap-components/bootstrap-components/css/bootstrap-components.min.css",
+				"node_modules/font-awesome/css/font-awesome.min.css",
+				"node_modules/admin-lte/dist/css/AdminLTE.min.css",
+				"node_modules/admin-lte/dist/css/skins/skin-purple.min.css",
+
+				"tmp/public/css/styles.css"
+			],
+			"dest": "tmp/public/css/styles.min.css"
+		}
+	}
+}

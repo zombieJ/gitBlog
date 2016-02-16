@@ -3,6 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{{Config.get().title || 'My Blog'}}</title>
+
+	<!-- ref:css public/css/styles.min.css -->
 	<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
 	<link href="node_modules/zombiej-bootstrap-components/bootstrap-components/css/bootstrap-components.min.css" rel="stylesheet"/>
 	<link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
@@ -10,6 +12,7 @@
 	<link href="node_modules/admin-lte/dist/css/skins/skin-purple.min.css" rel="stylesheet"/>
 
 	<link href="public/css/main.css" rel="stylesheet"/>
+	<!-- endref -->
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
 <div class="wrapper">
@@ -81,7 +84,7 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- Script -->
+<!-- ref:js public/js/doc.js -->
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="node_modules/zombiej-bootstrap-components/bootstrap-components/js/bootstrap-components.min.js"></script>
@@ -91,6 +94,8 @@
 <script src="node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="node_modules/admin-lte/dist/js/app.js"></script>
 <script src="node_modules/remarkable/dist/remarkable.min.js"></script>
+<script src="node_modules/moment/min/moment-with-locales.min.js"></script>
+<script src="node_modules/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js"></script>
 
 <script src="public/js/common.js"></script>
 
@@ -102,6 +107,6 @@
 <script src="public/js/srv/configSrv.js"></script>
 <script src="public/js/ctrl/blogCtrl.js"></script>
 <script src="public/js/ctrl/configCtrl.js"></script>
-
+<!-- endref -->
 </body>
 </html>

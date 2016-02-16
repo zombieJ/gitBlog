@@ -94,14 +94,49 @@
 			{name: "Save", func: save, disabled: saveDisabled}
 		];
 
+		Asset.list(true);
+
+		$scope.resView = false;
 		$scope.tags = "";
-		$scope.blog = {};
+		$scope.blog = {content: ""};
 		if($routeParams.createTime) {
 			Blog.fetch($routeParams.createTime).then(function(blog) {
 				$scope.blog = blog;
 				updateMD();
 			});
 		}
+
+		// ===================== Function =====================
+		$scope.isImage = function(name) {
+			return /\.(jpg|jpeg|bmp|png|gif)/i.test(name);
+		};
+
+		$scope.timeDesc = function(itemName) {
+			var _moment =  new moment(Number(itemName.substr(0,13)));
+			return _moment.toString();
+		};
+
+		$scope.selectItem = function(item) {
+			if($scope.isImage(item)) {
+				$scope.blog.content += ($scope.blog.content ? "\n" : "") + "![](data/assets/" + item + ")";
+			} else {
+				$scope.blog.content += ($scope.blog.content ? "\n" : "") + item;
+			}
+			updateMD();
+		};
+
+		$scope.deleteAsset = function(item) {
+			$.dialog({
+				title: "Delete Confirm",
+				content: "Do you want to delete '" + item + "'?",
+				confirm: true
+			}, function(ret) {
+				if(ret) {
+					Asset.delete(item);
+					$scope.$apply();
+				}
+			});
+		};
 
 		// ======================= Edit =======================
 		var md = new Remarkable({
@@ -161,28 +196,41 @@
 		// Asset drop
 		$("#article").on("drop", function(event) {
 			var files = event.originalEvent.dataTransfer.files;
-			//if(files.length) {
+			if(files.length) {
 				event.preventDefault();
-				//event.stopPropagation();
+				event.stopPropagation();
 
-
-				/*Asset.upload(files).then(function() {
-					console.log("done!!!");
-				});*/
-				setTimeout(function() {
-					var pos = $('#article').prop("selectionStart");
-					console.log(pos, event.originalEvent);
+				Asset.upload(files).then(function(list) {
+					Asset.list(true);
+					$.each(list, function(i, file) {
+						$scope.blog.content += ($scope.blog.content ? "\n" : "") + "![](data/assets/" + file.name + ")";
+					});
+					updateMD();
 				});
-			//}
+			} else {
+				var content = event.originalEvent.dataTransfer.getData("Text");
+				if($scope.isImage(content)) {
+					event.preventDefault();
+					event.stopPropagation();
+
+					$scope.blog.content += ($scope.blog.content ? "\n" : "") + "![](" + content + ")";
+					$scope.$apply();
+					updateMD();
+				}
+			}
 		});
 
 		// Window resize
 		$scope.resize = function(delay) {
+			$("body").addClass("lockSidebar");
 			setTimeout(function() {
 				var $article = $("#article");
 				var $overview = $("#overview .article-cntr");
+				var $resView = $("#resView");
 				$article.css("min-height", $win.height() - $article.offset().top - 15);
-				$overview.outerHeight($win.height() - $overview.offset().top - 25);
+				$overview.outerHeight($win.height() - ($overview.offset() || {top: 0}).top - 25);
+				$resView.outerHeight($win.height() - ($resView.offset() || {top: 0}).top - 15);
+				$("body").removeClass("lockSidebar");
 			}, delay);
 		};
 		$win.on("resize.edit", $scope.resize);

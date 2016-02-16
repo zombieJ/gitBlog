@@ -1,6 +1,7 @@
 <div class="row" id="editBlock">
 	<div class="col-sm-6 col-md-5 col-lg-4">
 		<div class="form-group">
+			<a class="pull-right fa fa-list" ng-click="resView =! resView; resize(1);"></a>
 			<label for="title">Title</label>
 			<input type="text" class="form-control" id="title" placeholder="Title" ng-model="blog.title"
 				   autocomplete="off" ng-change="resize(1)">
@@ -16,11 +17,28 @@
 					  ng-change="update()"></textarea>
 		</div>
 	</div>
-	<div class="col-sm-6 col-md-7 col-lg-8">
+	<div class="col-sm-6 col-md-7 col-lg-8" ng-show="!resView">
 		<div id="overview">
 			<h1 ng-class="blog.title ? '' : 'text-muted'">{{blog.title || "Untitled"}}</h1>
 			<p class="tags" ng-show="tags">Tags: {{tags}}</p>
 			<div class="article-cntr"></div>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-7 col-lg-8" ng-if="resView">
+		<div id="resView">
+			<ul class="products-list product-list-in-box res-cntr">
+				<li class="item" ng-repeat="item in Asset.list() track by $index">
+					<div class="product-img">
+						<img ng-if="isImage(item)" ng-src="data/assets/{{item}}">
+						<span ng-if="!isImage(item)" class="fa fa-book"></span>
+						<a class="fa fa-times" ng-click="deleteAsset(item)"></a>
+					</div>
+					<div class="product-info">
+						<a class="product-title" ng-click="selectItem(item)">{{item}}</a>
+						<span class="product-description">{{timeDesc(item)}}</span>
+					</div>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>

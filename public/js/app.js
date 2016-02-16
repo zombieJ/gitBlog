@@ -32,10 +32,11 @@
 		});
 	});
 
-	app.controller('main', function ($scope, Page, Blog, Config) {
+	app.controller('main', function ($scope, Page, Blog, Config, Asset) {
 		window.Config = $scope.Config = Config;
 		window.Page = $scope.Page = Page;
 		window.Blog = $scope.Blog = Blog;
+		window.Asset = $scope.Asset = Asset;
 
 		$scope.$on('$routeChangeStart', function(event, next, current) {
 			Page.reset();
