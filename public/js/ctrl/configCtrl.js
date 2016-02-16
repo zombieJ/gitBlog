@@ -5,10 +5,10 @@
 
 	configCtrl.controller('configCommonCtrl', function ($scope, Page, Config) {
 		Page.title = "Config";
-		$scope.config = Config.get();
+		$scope.config = $.extend({}, Config.get(), true);
 
 		$scope.save = function() {
-			Config.save().then(function() {
+			Config.save($scope.config).then(function() {
 				$.dialog({
 					title: "Success",
 					content: "Save successfully!"

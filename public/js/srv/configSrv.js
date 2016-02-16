@@ -25,8 +25,8 @@
 			return _config;
 		};
 
-		Config.save = function() {
-			console.log(_config);
+		Config.save = function(config) {
+			if(config) _config = config;
 			return File.write(_configPath, JSON.stringify(_config, null, "\t"));
 		};
 

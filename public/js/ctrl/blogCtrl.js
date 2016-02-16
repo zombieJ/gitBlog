@@ -3,10 +3,34 @@
 
 	var blogCtrl = angular.module('blogCtrl', ['ngRoute', 'ui.bootstrap']);
 
-	blogCtrl.controller('listCtrl', function ($scope, Page) {
+	// ==============================================================
+	// =                            List                            =
+	// ==============================================================
+	blogCtrl.controller('listCtrl', function ($scope, Page, Blog) {
 		Page.title = "Home";
+
+		$scope.tag = "";
+		$scope.setTag = function(tag, force) {
+			if(force) {
+				$scope.tag = tag;
+			} else {
+				$scope.tag = $scope.tag === tag ? "" : tag;
+			}
+
+			$("#tags").collapse('show');
+		};
+
+		$scope.articles = function() {
+			var _list = Blog.list();
+			if(!$scope.tag) return _list.articles;
+
+			return _list.tags[$scope.tag];
+		};
 	});
 
+	// ==============================================================
+	// =                            View                            =
+	// ==============================================================
 	blogCtrl.controller('blogCtrl', function ($http, $scope, $routeParams, Page, Blog) {
 		Page.hideTitle = true;
 
@@ -31,9 +55,36 @@
 				content: "Can't load blog."
 			});
 		});
+
+		$scope.delete = function() {
+			$.dialog({
+				title: "Delete Confirm",
+				content: "Are you sure to delete this article?",
+				confirm: true
+			}, function(ret) {
+				if(!ret) return;
+
+				Blog.delete($routeParams.createTime).then(function() {
+					$.dialog({
+						title: "Delete success",
+						content: "Delete success. Close dialog to go to the home page.",
+					}, function() {
+						location.href = "#/home";
+					});
+				}, function() {
+					$.dialog({
+						title: "Delete failed",
+						content: "Unknown exception for deleting.",
+					});
+				});
+			});
+		};
 	});
 
-	blogCtrl.controller('createCtrl', function ($scope, $routeParams, Page, Blog) {
+	// ==============================================================
+	// =                            Edit                            =
+	// ==============================================================
+	blogCtrl.controller('createCtrl', function ($scope, $routeParams, Page, Blog, Asset) {
 		var _refreshMD_id;
 		var $win = $(window);
 
@@ -52,7 +103,7 @@
 			});
 		}
 
-		// Edit
+		// ======================= Edit =======================
 		var md = new Remarkable({
 			html: true,
 			xhtmlOut: false,
@@ -73,7 +124,7 @@
 			_refreshMD_id = setTimeout(updateMD, 200);
 		};
 
-		// Save
+		// ======================= Save =======================
 		function save() {
 			var _tags = {};
 			$.each($scope.tags.split(/\s*,\s*/), function(i, tag) {
@@ -87,7 +138,12 @@
 			Blog.save($scope.blog).then(function() {
 				$.dialog({
 					title: "Success",
-					content: "Save complete!"
+					content: "Save complete! Go to home page?",
+					confirm: true
+				}, function(ret) {
+					if(ret) {
+						location.href = "#/home";
+					}
 				});
 			}, function(err) {
 				$.dialog({
@@ -100,6 +156,25 @@
 		function saveDisabled() {
 			return !$scope.blog.title || !$scope.blog.content;
 		}
+
+		// ======================== UI ========================
+		// Asset drop
+		$("#article").on("drop", function(event) {
+			var files = event.originalEvent.dataTransfer.files;
+			//if(files.length) {
+				event.preventDefault();
+				//event.stopPropagation();
+
+
+				/*Asset.upload(files).then(function() {
+					console.log("done!!!");
+				});*/
+				setTimeout(function() {
+					var pos = $('#article').prop("selectionStart");
+					console.log(pos, event.originalEvent);
+				});
+			//}
+		});
 
 		// Window resize
 		$scope.resize = function(delay) {

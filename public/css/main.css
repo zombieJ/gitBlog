@@ -29,6 +29,10 @@ a:hover {
 	background: transparent;
 }
 
+.box-body .box-body-block {
+	border-bottom: 1px solid #f4f4f4;
+}
+
 .products-list .product-img > .fa {
 	font-size: 30px;
 	line-height: 100%;
@@ -66,4 +70,10 @@ a:hover {
 #overview > .article-cntr {
 	overflow-y: auto;
 	font-size: 16px;
+}
+
+#overview > .article-cntr img {
+	max-width: 100%;
+	display: block;
+	margin: 0 auto;
 }

@@ -2,7 +2,7 @@
 <html lang="en" ng-app="app" ng-controller="main">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<title>{{Config.get().title || 'My Blog'}}</title>
 	<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
 	<link href="node_modules/zombiej-bootstrap-components/bootstrap-components/css/bootstrap-components.min.css" rel="stylesheet"/>
 	<link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
@@ -49,7 +49,6 @@
 			<ul class="sidebar-menu">
 				<li class="header">MAIN NAVIGATION</li>
 				<li><a href="#/home"><i class="fa fa-home"></i> <span>Home</span></a></li>
-				<li><a href="#/tags"><i class="fa fa-tags"></i> <span>Tags</span></a></li>
 			</ul>
 			<ul class="sidebar-menu" ng-if="Page.local">
 				<li class="header">CONFIGURATION</li>
@@ -93,12 +92,16 @@
 <script src="node_modules/admin-lte/dist/js/app.js"></script>
 <script src="node_modules/remarkable/dist/remarkable.min.js"></script>
 
+<script src="public/js/common.js"></script>
+
 <script src="public/js/app.js"></script>
 <script src="public/js/srv/pageSrv.js"></script>
 <script src="public/js/srv/blogSrv.js"></script>
 <script src="public/js/srv/fileSrv.js"></script>
+<script src="public/js/srv/assetSrv.js"></script>
 <script src="public/js/srv/configSrv.js"></script>
 <script src="public/js/ctrl/blogCtrl.js"></script>
 <script src="public/js/ctrl/configCtrl.js"></script>
+
 </body>
 </html>

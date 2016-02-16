@@ -1,9 +1,13 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<a ng-if="Page.local" class="pull-right btn btn-primary btn-xs" href="#/edit/{{blog.createTime}}">
-			<span class="fa fa-pencil"></span>
-			Edit
-		</a>
+		<div class="pull-right" ng-if="Page.local">
+			<a class="btn btn-primary btn-xs" href="#/edit/{{blog.createTime}}">
+				<span class="fa fa-pencil"></span> Edit
+			</a>
+			<a class="btn btn-danger btn-xs" ng-click="delete()">
+				<span class="fa fa-trash"></span> Delete
+			</a>
+		</div>
 		<h3 class="box-title">
 			{{blog.title}}
 		</h3>

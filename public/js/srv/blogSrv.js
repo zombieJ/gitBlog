@@ -22,6 +22,17 @@
 				_list = {};
 				$http.get("data/list.json?_=" + (+new Date())).then(function(data) {
 					_list = data.data;
+
+					// Parse tags
+					_list.tags = {};
+					$.each(_list.articles, function(i, article) {
+						$.each(article.tags || [], function(j, tag) {
+							if(!tag) return;
+
+							var tagArticles = _list.tags[tag] = _list.tags[tag] || [];
+							tagArticles.push(article);
+						});
+					});
 				});
 			}
 			return _list;
@@ -29,39 +40,24 @@
 
 		// Fetch
 		Blog.fetch = function(createTime) {
-			var FS = require("fs");
-			var _path = "";
-
-			// Get current path
-			if(!FS.existsSync("index.html")) {
-				_path = process.execPath.replace(/[^\\\/]+\.exe$/, '');
-			}
-
-			return File.read(_path + "data/articles/" + createTime + ".json").then(function(data) {
+			return File.read(File.path("data/articles/" + createTime + ".json")).then(function(data) {
 				return JSON.parse(data);
 			});
 		};
 
 		// Save blog
 		Blog.save = function(blog) {
-			var FS = require("fs");
-			var _path = "", _path_article, _path_list;
+			var _path_article = "data/articles/";
+			var _path_list = "data/list.json";
+
 			var _deferred = $q.defer();
 
-			// Get current path
-			if(!FS.existsSync("index.html")) {
-				_path = process.execPath.replace(/[^\\\/]+\.exe$/, '');
-			}
-
-			_path_article = _path + "data/articles/";
-			_path_list = _path + "data/list.json";
-
 			// Write blog
-			File.write(_path_article + blog.createTime + ".json", JSON.stringify(blog, null, "\t")).then(function() {
+			File.write(File.path(_path_article + blog.createTime + ".json"), JSON.stringify(blog, null, "\t")).then(function() {
 				var data;
 
 				// Read blog list
-				File.read(_path_list).then(function(_data) {
+				File.read(File.path(_path_list)).then(function(_data) {
 					data = _data;
 				}).finally(function() {
 					var _list, _entity, i, _match;
@@ -89,7 +85,7 @@
 					}
 
 					// Update list
-					File.write(_path_list, JSON.stringify(_list, null, "\t")).then(function() {
+					File.write(File.path(_path_list), JSON.stringify(_list, null, "\t")).then(function() {
 						_deferred.resolve();
 						Blog.list(true);
 					}, function(err) {
@@ -103,27 +99,53 @@
 			return _deferred.promise;
 		};
 
-		// Rebuild blog
-		Blog.rebuild = function() {
+		// Delete blog
+		Blog.delete = function(createTime) {
+			var data;
 			var FS = require("fs");
-			var _path = "";
+			var _path_article = "data/articles/";
+			var _path_list = "data/list.json";
 			var _deferred = $q.defer();
 
-			// Get current path
-			if(!FS.existsSync("index.html")) {
-				_path = process.execPath.replace(/[^\\\/]+\.exe$/, '');
-			}
+			FS.unlinkSync(File.path(_path_article + createTime + ".json"));
 
-			File.list(_path + "data/articles/").then(function(list) {
+			// Clean list record
+			File.read(File.path(_path_list)).then(function(_data) {
+				data = _data;
+			}).finally(function() {
+				var _list;
+				try {
+					_list = JSON.parse(data);
+				} catch (err) {
+					_list = {};
+				}
+
+				common.array.remove(Number(createTime), _list.articles || [], "createTime");
+				// Update list
+				File.write(File.path(_path_list), JSON.stringify(_list, null, "\t")).then(function() {
+					_deferred.resolve();
+					Blog.list(true);
+				}, function(err) {
+					_deferred.reject(err);
+				});
+			});
+
+			return _deferred.promise;
+		};
+
+		// Rebuild blog
+		Blog.rebuild = function() {
+			var _deferred = $q.defer();
+
+			File.list(File.path("data/articles/")).then(function(list) {
 				var _list = {
 					articles: []
 				};
-				var _articles = list.sort();
-				var _promiseList = $.map(_articles, function(file) {
-					return File.read(_path + "data/articles/" + file).then(function(data) {
+				var _promiseList = $.map(list, function(file) {
+					return File.read(File.path("data/articles/" + file)).then(function(data) {
 						try {
 							var _entity = Blog.snapshot(JSON.parse(data));
-							_list.articles.unshift(_entity);
+							_list.articles.push(_entity);
 						} catch(err) {
 							console.error(err);
 						}
@@ -131,7 +153,11 @@
 				});
 
 				$q.all(_promiseList).then(function() {
-					File.write(_path + "data/list.json", JSON.stringify(_list, null, "\t")).finally(function() {
+					_list.articles.sort(function(a, b) {
+						return b.createTime - a.createTime;
+					});
+
+					File.write(File.path("data/list.json"), JSON.stringify(_list, null, "\t")).finally(function() {
 						_deferred.resolve();
 						Blog.list(true);
 					});
