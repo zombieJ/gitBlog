@@ -1,5 +1,5 @@
 <div class="row" id="editBlock">
-	<div class="col-sm-6 col-md-5 col-lg-4">
+	<div class="col-sm-6 col-md-6 col-lg-5">
 		<div class="edit-cntr">
 			<a class="fa fa-list" ng-click="resView =! resView; resize(1);"></a>
 			<input type="text" class="form-control" id="title" placeholder="Title" ng-model="blog.title"
@@ -10,14 +10,14 @@
 					  ng-change="update()"></textarea>
 		</div>
 	</div>
-	<div class="col-sm-6 col-md-7 col-lg-8" ng-show="!resView">
+	<div class="col-sm-6 col-md-6 col-lg-7" ng-show="!resView">
 		<div id="overview">
 			<h1 ng-class="blog.title ? '' : 'text-muted'">{{blog.title || "Untitled"}}</h1>
 			<p class="tags" ng-show="tags">Tags: {{tags}}</p>
 			<div class="article-cntr"></div>
 		</div>
 	</div>
-	<div class="col-sm-6 col-md-7 col-lg-8" ng-if="resView">
+	<div class="col-sm-6 col-md-6 col-lg-7" ng-if="resView">
 		<div id="resView">
 			<ul class="products-list product-list-in-box res-cntr">
 				<li class="item" ng-repeat="item in Asset.list() track by $index">

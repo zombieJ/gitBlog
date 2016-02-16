@@ -36,6 +36,7 @@
 
 		$http.get("data/articles/" + $routeParams.createTime + ".json", {params: {_: Math.random()}}).then(function(data) {
 			$scope.blog = data.data;
+			$scope.date = new moment($scope.blog.createTime).format("YYYY-MM-DD HH:mm");
 
 			var md = new Remarkable({
 				html: true,
@@ -46,7 +47,7 @@
 				typographer: false
 			});
 
-			$("#article").html(
+			$("#article .article-cntr").html(
 				md.render($scope.blog.content)
 			);
 		}, function() {

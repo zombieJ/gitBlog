@@ -98,6 +98,10 @@ a:hover {
 	height: auto;
 }
 
+#editBlock .edit-cntr textarea {
+	resize: none;
+}
+
 #overview {
 	background: #FFFFFF;
 	padding: 10px;
@@ -126,6 +130,30 @@ a:hover {
 	max-width: 100%;
 	display: block;
 	margin: 0 auto;
+}
+
+#article {
+	max-width: 620px;
+	margin: 0 auto;
+}
+
+#article > h3 {
+	border-bottom: 1px solid #EEE;
+	margin: 0 0 10px 0;
+	padding: 15px 0;
+	font-size: 32px;
+	color: #666;
+}
+
+#article > .about {
+	margin-bottom: 10px;
+	color: #CCC;
+}
+
+.fixed-toolbar {
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
 
 #resView {
