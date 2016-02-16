@@ -50,6 +50,7 @@
 			$("#article .article-cntr").html(
 				md.render($scope.blog.content)
 			);
+			$("#article .article-cntr table").addClass("table table-bordered");
 		}, function() {
 			$.dialog({
 				title: "OPS",
@@ -154,6 +155,7 @@
 			$("#overview .article-cntr").html(
 				md.render($scope.blog.content)
 			);
+			$("#overview .article-cntr table").addClass("table table-bordered");
 		}
 
 		$scope.update = function () {
