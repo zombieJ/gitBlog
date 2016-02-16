@@ -102,6 +102,7 @@
 		if($routeParams.createTime) {
 			Blog.fetch($routeParams.createTime).then(function(blog) {
 				$scope.blog = blog;
+				$scope.tags = ($scope.blog.tags || []).join(",");
 				updateMD();
 			});
 		}
@@ -162,6 +163,8 @@
 		// ======================= Save =======================
 		function save() {
 			var _tags = {};
+			var _thumbnail = $scope.blog.content.match(/^!\[[^\]]*]\(([^\)]*)(\s+"[^"]*")?\)/)[1];
+
 			$.each($scope.tags.split(/\s*,\s*/), function(i, tag) {
 				_tags[tag] = tag;
 			});
@@ -169,6 +172,8 @@
 				return tag;
 			});
 			$scope.blog.createTime = $scope.blog.createTime || +new Date();
+
+			$scope.blog.thumbnail = _thumbnail;
 
 			Blog.save($scope.blog).then(function() {
 				$.dialog({

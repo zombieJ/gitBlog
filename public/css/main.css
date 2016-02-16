@@ -41,6 +41,10 @@ a:hover {
 	position: relative;
 }
 
+.products-list .product-img > img {
+	object-fit: cover;
+}
+
 .products-list .product-img > .fa {
 	font-size: 30px;
 	line-height: 100%;
@@ -74,6 +78,26 @@ a:hover {
 	height: 100%;
 }
 
+#editBlock .edit-cntr {
+	position: relative;
+}
+
+#editBlock .edit-cntr .fa-list {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+#editBlock .edit-cntr input {
+	margin-bottom: 1px;
+}
+
+#editBlock .edit-cntr #tags {
+	font-size: 12px;
+	padding: 5px 12px;
+	height: auto;
+}
+
 #overview {
 	background: #FFFFFF;
 	padding: 10px;
@@ -97,6 +121,7 @@ a:hover {
 	font-size: 16px;
 }
 
+#article img,
 #overview > .article-cntr img {
 	max-width: 100%;
 	display: block;

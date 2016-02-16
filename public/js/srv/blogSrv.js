@@ -7,9 +7,19 @@
 		var Blog = function() {};
 
 		Blog.snapshot = function(blog) {
+			var md = new Remarkable({
+				html: true,
+				xhtmlOut: false,
+				breaks: false,
+				langPrefix: 'language-',
+				linkify: false,
+				typographer: false
+			});
+			var $content = $(md.render(blog.content));
+
 			return {
 				title: blog.title,
-				introduction: blog.introduction || blog.content.substr(0, 200),
+				introduction: blog.introduction || $content.text().substr(0, 200),
 				tags: blog.tags,
 				thumbnail: blog.thumbnail,
 				createTime: blog.createTime
