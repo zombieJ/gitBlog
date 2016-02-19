@@ -6,6 +6,8 @@
 
 		var Blog = function() {};
 
+		Blog.ready = false;
+
 		Blog.snapshot = function(blog) {
 			var md = new Remarkable({
 				html: true,
@@ -43,6 +45,8 @@
 							tagArticles.push(article);
 						});
 					});
+				}).finally(function() {
+					Blog.ready = true;
 				});
 			}
 			return _list;

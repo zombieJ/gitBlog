@@ -10,7 +10,8 @@
 		function _configWrap(config) {
 			return $.extend({
 				title: "My Blog",
-				dateFormat: "YYYY-MM-DD HH:mm"
+				dateFormat: "YYYY-MM-DD HH:mm",
+				navFixTop: false
 			}, config || {});
 		}
 

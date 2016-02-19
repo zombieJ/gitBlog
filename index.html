@@ -16,7 +16,7 @@
 	<link href="public/css/main.css" rel="stylesheet"/>
 	<!-- endref -->
 </head>
-<body class="hold-transition skin-purple sidebar-mini fixed">
+<body class="hold-transition skin-purple sidebar-mini" ng-class="{fixed: Config.get().navFixTop}">
 <div class="wrapper">
 	<header class="main-header">
 		<!-- Logo -->
@@ -91,6 +91,7 @@
 
 <!-- ref:js public/js/doc.js -->
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="node_modules/zombiej-bootstrap-components/bootstrap-components/js/bootstrap-components.min.js"></script>
 <script src="node_modules/angular/angular.min.js"></script>

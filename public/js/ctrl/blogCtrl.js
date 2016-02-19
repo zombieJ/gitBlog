@@ -33,8 +33,10 @@
 	// ==============================================================
 	blogCtrl.controller('blogCtrl', function ($http, $scope, $routeParams, Page, Blog, Config) {
 		Page.hideTitle = true;
+		$scope.ready = false;
 
 		$http.get("data/articles/" + $routeParams.createTime + ".json", {params: {_: Math.random()}}).then(function(data) {
+			$scope.ready = true;
 			$scope.blog = data.data;
 			$scope.date = new moment($scope.blog.createTime).format(Config.get().dateFormat);
 
@@ -166,7 +168,7 @@
 		// ======================= Save =======================
 		function save() {
 			var _tags = {};
-			var _thumbnail = $scope.blog.content.match(/^!\[[^\]]*]\(([^\)]*)(\s+"[^"]*")?\)/)[1];
+			var _thumbnail = ($scope.blog.content.match(/^!\[[^\]]*]\(([^\)]*)(\s+"[^"]*")?\)/) || [])[1];
 
 			$.each($scope.tags.split(/\s*,\s*/), function(i, tag) {
 				_tags[tag] = tag;
