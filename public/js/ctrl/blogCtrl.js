@@ -31,12 +31,12 @@
 	// ==============================================================
 	// =                            View                            =
 	// ==============================================================
-	blogCtrl.controller('blogCtrl', function ($http, $scope, $routeParams, Page, Blog) {
+	blogCtrl.controller('blogCtrl', function ($http, $scope, $routeParams, Page, Blog, Config) {
 		Page.hideTitle = true;
 
 		$http.get("data/articles/" + $routeParams.createTime + ".json", {params: {_: Math.random()}}).then(function(data) {
 			$scope.blog = data.data;
-			$scope.date = new moment($scope.blog.createTime).format("YYYY-MM-DD HH:mm");
+			$scope.date = new moment($scope.blog.createTime).format(Config.get().dateFormat);
 
 			var md = new Remarkable({
 				html: true,

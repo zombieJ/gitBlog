@@ -7,19 +7,26 @@
 		var _config;
 		var Config = function() {};
 
+		function _configWrap(config) {
+			return $.extend({
+				title: "My Blog",
+				dateFormat: "YYYY-MM-DD HH:mm"
+			}, config || {});
+		}
+
 		Config.get = function(forceRefresh) {
 			if(!Page.local) {
 				if(!_config) {
-					_config = {};
+					_config = _configWrap();
 					$http.get(_configPath, {params: {_: Math.random()}}).then(function (data) {
-						_config = data.data;
+						_config = _configWrap(data.data);
 					});
 				}
 			} else if(!_config || forceRefresh) {
 				try {
-					_config = JSON.parse(File.read(_configPath, true));
+					_config = _configWrap(JSON.parse(File.read(_configPath, true)));
 				} catch (err) {
-					_config = {};
+					_config = _configWrap();
 				}
 			}
 			return _config;
