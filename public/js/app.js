@@ -39,16 +39,27 @@
 		window.Asset = $scope.Asset = Asset;
 		window.Git = $scope.Git = Git;
 
+		$scope.lock = false;
+
 		$scope.$on('$routeChangeStart', function(event, next, current) {
 			Page.reset();
 		});
 
+		$scope.upload = function() {
+			$scope.lock = true;
+			Git.push().finally(function() {
+				$scope.lock = false;
+			});
+		};
+
 		$scope.rebuild = function() {
+			$scope.lock = true;
 			Blog.rebuild().then(function() {
 				$.dialog({
 					title: "Success",
 					content: "Rebuild successfully."
 				});
+				$scope.lock = false;
 			});
 		};
 	});
