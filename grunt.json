@@ -13,7 +13,7 @@
 				"node_modules/angular-resource/angular-resource.min.js",
 				"node_modules/angular-route/angular-route.min.js",
 				"node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js",
-				"node_modules/admin-lte/dist/js/app.js",
+				"node_modules/admin-lte/dist/js/app.min.js",
 				"node_modules/remarkable/dist/remarkable.min.js",
 				"node_modules/moment/min/moment-with-locales.min.js",
 				"node_modules/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js",
