@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('app', ['ngRoute', 'configCtrl', 'blogCtrl', 'ui.bootstrap']);
+	var app = angular.module('app', ['ngRoute', 'configCtrl', 'blogCtrl', 'memoryCtrl', 'ui.bootstrap']);
 
 	app.config(function ($routeProvider) {
 		// ==========================================
@@ -19,6 +19,13 @@
 		}).when('/blog/:createTime', {
 			templateUrl: 'partials/blog/blog.html',
 			controller: 'blogCtrl'
+
+		// ==========================================
+		// =                 Memory                 =
+		// ==========================================
+		}).when('/memory', {
+			templateUrl: 'partials/memory/list.html',
+			controller: 'memoryList'
 
 		// ==========================================
 		// =                 Config                 =

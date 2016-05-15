@@ -1,0 +1,29 @@
+<div class="box box-primary">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			My Memories
+			<small><a href="#/create" class="text-muted" ng-if="Page.local">+New Memory</a></small>
+		</h3>
+	</div>
+	<div class="box-body">
+		<ul class="memories list-inline">
+			<li ng-repeat="mem in memoryList track by $index"
+				ng-mouseenter="enterMemory(mem, $event)"
+				ng-mouseleave="leaveMemory(mem)">
+				<img ng-src="{{blog.thumbnail}}" ng-if="blog.thumbnail">
+				<span class="fa fa-question-circle" ng-if="!blog.thumbnail"></span>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div id="memTip" class="memory clearfix">
+	<div class="mem-img">
+		<img ng-src="{{blog.thumbnail}}" ng-if="blog.thumbnail">
+		<span class="fa fa-question-circle" ng-if="!blog.thumbnail"></span>
+	</div>
+	<div class="mem-info">
+		<h3>{{currentMemory.title}}</h3>
+		<pre>{{currentMemory.description}}</pre>
+	</div>
+</div>

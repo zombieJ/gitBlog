@@ -74,6 +74,66 @@ a:hover {
 	margin-left: 5px;
 }
 
+.memories li {
+	vertical-align: top;
+	margin-bottom: 10px;
+}
+
+.memories img,
+.memory .mem-img img {
+	height: 50px;
+	width: 50px;
+}
+
+.memories .fa,
+.memory .mem-img .fa {
+	font-size: 30px;
+	line-height: 100%;
+	padding: 10px 12px;
+	background: #CCCCCC;
+	color: #FFFFFF;
+}
+
+.memory {
+	background: rgba(0,0,0,0.9);
+	padding: 15px;
+	border-radius: 3px;
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+	max-width: 90%;
+	width: 400px;
+	color: #FFF;
+	pointer-events: none;
+	z-index: 1000;
+	position: relative;
+}
+
+.memory .mem-img {
+	float: left;
+}
+.memory .mem-img img {
+	width: 90px;
+	height: 90px;
+}
+.memory .mem-img .fa {
+	font-size: 50px;
+	padding: 20px 23px;
+}
+
+.memory .mem-info {
+	margin-left: 105px;
+}
+.memory .mem-info h3 {
+	font-size: 24px;
+	margin: 5px 0 15px 0;
+	color: #EEE;
+}
+.memory .mem-info pre {
+	border: 0;
+	padding: 0;
+	background: transparent;
+	color: #DDD;
+}
+
 #editBlock {
 	height: 100%;
 }
