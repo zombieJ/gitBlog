@@ -78,6 +78,11 @@ a:hover {
 	vertical-align: top;
 	margin-bottom: 10px;
 }
+.memories li > div {
+	max-width: 50px;
+	max-height: 50px;
+	overflow: hidden;
+}
 
 .memories img,
 .memory .mem-img img {
@@ -95,7 +100,7 @@ a:hover {
 }
 
 .memory {
-	background: rgba(0,0,0,0.9);
+	background: rgba(0,0,0,0.7);
 	padding: 15px;
 	border-radius: 3px;
 	box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
@@ -109,6 +114,7 @@ a:hover {
 
 .memory .mem-img {
 	float: left;
+	border: 1px solid rgba(255,255,255,0.8);
 }
 .memory .mem-img img {
 	width: 90px;
@@ -125,13 +131,23 @@ a:hover {
 .memory .mem-info h3 {
 	font-size: 24px;
 	margin: 5px 0 15px 0;
-	color: #EEE;
+	color: #FFF;
 }
 .memory .mem-info pre {
 	border: 0;
 	padding: 0;
 	background: transparent;
-	color: #DDD;
+	color: #FFF;
+}
+
+#memoryMDL .memoryWindow {
+	height: 100px;
+	border: 2px dashed #CCC;
+	text-align: center;
+	font-size: 24px;
+	color: #999;
+	padding-top: 30px;
+	cursor: default;
 }
 
 #editBlock {
