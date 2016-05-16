@@ -138,6 +138,7 @@ a:hover {
 	padding: 0;
 	background: transparent;
 	color: #FFF;
+	white-space: normal;
 }
 
 #memoryMDL .memoryWindow {
