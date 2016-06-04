@@ -9,6 +9,9 @@
 	blogCtrl.controller('listCtrl', function ($scope, Page, Blog) {
 		Page.title = "Home";
 
+		$scope.pageSize = 10;
+		$scope.currentPage = 1;
+
 		$scope.tag = "";
 		$scope.setTag = function(tag, force) {
 			if(force) {
