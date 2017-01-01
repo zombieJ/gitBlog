@@ -52,6 +52,11 @@
 			Page.reset();
 		});
 
+		$scope.getDocTitle = function() {
+			var subDocTitle = Page.title !== 'Home' && Page.title;
+			return Config.get().title + (subDocTitle ? ' - ' + subDocTitle : '');
+		};
+
 		$scope.upload = function() {
 			$scope.lock = true;
 			Git.push().finally(function() {

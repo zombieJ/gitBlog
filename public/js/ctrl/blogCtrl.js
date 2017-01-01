@@ -40,14 +40,19 @@
 	// ==============================================================
 	// =                            View                            =
 	// ==============================================================
-	blogCtrl.controller('blogCtrl', function ($http, $scope, $routeParams, Page, Blog, Config) {
+	blogCtrl.controller('blogCtrl', function ($q, $http, $scope, $routeParams, Page, Blog, Config) {
 		Page.hideTitle = true;
 		$scope.ready = false;
 
-		$http.get("data/articles/" + $routeParams.createTime + ".json", {params: {_: Math.random()}}).then(function(data) {
+		var canceler = $q.defer();
+		$http.get("data/articles/" + $routeParams.createTime + ".json", {
+			params: {_: Math.random()},
+			timeout: canceler.promise
+		}).then(function(data) {
 			$scope.ready = true;
 			$scope.blog = data.data;
 			$scope.date = new moment($scope.blog.createTime).format(Config.get().dateFormat);
+			Page.title = $scope.blog.title;
 
 			var md = new Remarkable({
 				html: true,
@@ -92,6 +97,10 @@
 				});
 			});
 		};
+
+		$scope.$on('$destroy', function() {
+			canceler.resolve();
+		});
 	});
 
 	// ==============================================================
